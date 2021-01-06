@@ -1,1 +1,56 @@
-<h1>hello!</h1>
+<h1>Due to the recent changes in Google Play Policies made on 16/12/2020, we have observed a change of behavior in the review and approval initiatives of Google Play. You can see the policy updates <a href="https://support.google.com/googleplay/android-developer/answer/9934569?hl=en&amp;ref_topic=9877065" target="_blank" rel="noopener">here</a>.</h1>
+<h1>Although there were no policy changes made covering this scope, policy reviewers started to send warnings about collection of Installed Applications information starting from 17/12/2020.</h1>
+<h1>We have immediately released a new Android SDK version (11.6.1) which does not include any methods related to Installed Applications. We have also updated React Native and Flutter SDKs. If you are using an older version of the SDK, it&rsquo;s recommended to update the SDK and ensure you have followed the steps explained below.</h1>
+<h1>This guide is prepared to help you update all necessary APKs listed in your Play Store account and get an approval.</h1>
+<h1>1.Updating/Removing Old Tracks from the All Stages</h1>
+<p>Before starting the release process, please make sure to remove (if possible)&nbsp; the non-compliant APK(s) or old versions of your apps on all stages including Alpha, Beta and production. During the review process, Google may reject or remove your application if you have any non-compliant APK(s) in your internal tracks.&nbsp;</p>
+<p><span style="color: #222222;">For support on deactivating the non-compliant APK, please try the following steps below:</span></p>
+<ol>
+<li style="color: #222222;"><span style="color: #222222;">To deactivate a non-compliant APK, </span><span style="color: #222222; font-weight: bold;">create a new release and upload a compliant APK to the same track</span><span style="color: #222222;">.</span></li>
+<li><span style="color: #222222;">Be sure to </span><a href="https://support.google.com/googleplay/android-developer/answer/113476" target="_blank" rel="noopener"><span style="color: #1a73e8;">increment the APK version number</span></a><span style="color: #222222;"> and set the release to 100% rollout, </span><span style="color: #222222; font-weight: bold;">in order to successfully override and deactivate the non-compliant APK(s)</span><span style="color: #222222;">.</span></li>
+</ol>
+<ol>
+<li><span style="color: #222222;">Sign in to your </span><a href="https://play.google.com/apps/publish/" target="_blank" rel="noopener"><span style="color: #1a73e8;">Play Console</span></a><span style="color: #222222;">, </span><a href="https://support.google.com/googleplay/android-developer/answer/113476" target="_blank" rel="noopener"><span style="color: #1a73e8;">upload the modified policy compliant APK</span></a><span style="color: #222222; font-weight: bold;">across all tracks</span><span style="color: #222222;">, and </span><span style="color: #222222; font-weight: bold;">deactivate the non-compliant APK(s)</span><span style="color: #222222;">.</span></li>
+</ol>
+<p><span style="color: #222222;">For your reference, if you continue to have technical issues related to deactivating the non-compliant APK, please contact the </span><a href="https://support.google.com/googleplay/android-developer/answer/7218994?hl=en" target="_blank" rel="noopener"><span style="color: #1a73e8;">Google Play developer support team</span></a><span style="color: #222222;">.</span></p>
+<h1>2. SDK Update</h1>
+<p>After completing all adjustments for the non-compliant APK (s);if you still haven't upgraded to the latest SDK version, please switch to the current versions.</p>
+<p>Insider's latest SDK versions are as follows:</p>
+<ol>
+<li>Native Android : 11.6.1 and 11.6.1-nh (Non Huawei )Changelogs: <a href="https://github.com/useinsider/java-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/java-sample/blob/master/Changelog.md</a></li>
+<li>React Native: 4.1.1 and 4.1.1-NH (Non Huawei )</li>
+</ol>
+<p>Changelogs :<a href="https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md</a></p>
+<ol>
+<li>Flutter :2.1.1 and 2.1.1-nh&nbsp; (Non Huawei )</li>
+</ol>
+<p>Changelogs : <a href="https://github.com/useinsider/dart-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/dart-sample/blob/master/Changelog.md</a></p>
+<h1>3.Location Collection&nbsp;</h1>
+<p>According to Google&rsquo;s policy restrictions, you may only request permissions that are crucial to the core functionality of your application. You may not use permissions that give access to the user or device data for undisclosed, unimplemented, or disallowed features or purposes.</p>
+<p>If you&rsquo;re collecting location information you need to be sure that you follow these steps :&nbsp;</p>
+<ol>
+<li>Request location permissions : <a href="https://developer.android.com/training/location/permissions#background" target="_blank" rel="noopener">https://developer.android.com/training/location/permissions#background</a></li>
+<li>Location updates in Android 11 : <a href="https://developer.android.com/about/versions/11/privacy/location#background-location" target="_blank" rel="noopener">https://developer.android.com/about/versions/11/privacy/location#background-location</a></li>
+</ol>
+<p>If your application collects the location information to use the Geofence feature via the Insider SDK, you can exclude the following <span style="font-weight: bold;">permissions</span> in your app&rsquo;s <span style="font-weight: bold;">AndroidManifest.xml</span></p>
+<p><span style="font-style: italic;">&lt;uses-permission</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_FINE_LOCATION"</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">"/&gt;</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&lt;uses-permission</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_BACKGROUND_LOCATION"</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">" /&gt;</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&lt;uses-permission</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_COARSE_LOCATION"</span></p>
+<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">" /&gt;</span></p>
+<p>&nbsp;In the scenario where you want to stop collecting a specific location collection (e.g background), you just need to remove the corresponding permission method only.</p>
+<p><span style="font-weight: bold; font-style: italic;">Please note that; if the application is compliant to collect location permissions, that is, if you meet the requirements Google requires to collect location; no need to remove any method/permissions of the Geofence feature.</span></p>
+<h1>4.Privacy Policy Review</h1>
+<p>From April 2020 google is on track to enforce user&rsquo;s right to give consent / reject any kind of information that can be tracked.</p>
+<p>If your application or your other SDKs uses/collects any information without <span style="font-weight: bold;">EXPLICITLY</span> declaring it, you should update your privacy policy immediately about these data collections.</p>
+<p>You can read in detail about the needs and privacy policies here.</p>
+<p>There will also be new policy changes starting from January 20 - 2021</p>
+<ol>
+<li><a href="https://support.google.com/googleplay/android-developer/answer/9992660" target="_blank" rel="noopener">https://support.google.com/googleplay/android-developer/answer/9992660</a></li>
+<li><a href="https://developer.android.com/about/versions/11/privacy" target="_blank" rel="noopener">https://developer.android.com/about/versions/11/privacy</a></li>
+<li><a href="https://developer.android.com/distribute/play-policies#NovemberPolicyUpdate" target="_blank" rel="noopener">https://developer.android.com/distribute/play-policies#NovemberPolicyUpdate</a></li>
+</ol>
