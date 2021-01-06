@@ -1,56 +1,1541 @@
-<h1>Due to the recent changes in Google Play Policies made on 16/12/2020, we have observed a change of behavior in the review and approval initiatives of Google Play. You can see the policy updates <a href="https://support.google.com/googleplay/android-developer/answer/9934569?hl=en&amp;ref_topic=9877065" target="_blank" rel="noopener">here</a>.</h1>
-<h1>Although there were no policy changes made covering this scope, policy reviewers started to send warnings about collection of Installed Applications information starting from 17/12/2020.</h1>
-<h1>We have immediately released a new Android SDK version (11.6.1) which does not include any methods related to Installed Applications. We have also updated React Native and Flutter SDKs. If you are using an older version of the SDK, it&rsquo;s recommended to update the SDK and ensure you have followed the steps explained below.</h1>
-<h1>This guide is prepared to help you update all necessary APKs listed in your Play Store account and get an approval.</h1>
-<h1>1.Updating/Removing Old Tracks from the All Stages</h1>
-<p>Before starting the release process, please make sure to remove (if possible)&nbsp; the non-compliant APK(s) or old versions of your apps on all stages including Alpha, Beta and production. During the review process, Google may reject or remove your application if you have any non-compliant APK(s) in your internal tracks.&nbsp;</p>
-<p><span style="color: #222222;">For support on deactivating the non-compliant APK, please try the following steps below:</span></p>
-<ol>
-<li style="color: #222222;"><span style="color: #222222;">To deactivate a non-compliant APK, </span><span style="color: #222222; font-weight: bold;">create a new release and upload a compliant APK to the same track</span><span style="color: #222222;">.</span></li>
-<li><span style="color: #222222;">Be sure to </span><a href="https://support.google.com/googleplay/android-developer/answer/113476" target="_blank" rel="noopener"><span style="color: #1a73e8;">increment the APK version number</span></a><span style="color: #222222;"> and set the release to 100% rollout, </span><span style="color: #222222; font-weight: bold;">in order to successfully override and deactivate the non-compliant APK(s)</span><span style="color: #222222;">.</span></li>
-</ol>
-<ol>
-<li><span style="color: #222222;">Sign in to your </span><a href="https://play.google.com/apps/publish/" target="_blank" rel="noopener"><span style="color: #1a73e8;">Play Console</span></a><span style="color: #222222;">, </span><a href="https://support.google.com/googleplay/android-developer/answer/113476" target="_blank" rel="noopener"><span style="color: #1a73e8;">upload the modified policy compliant APK</span></a><span style="color: #222222; font-weight: bold;">across all tracks</span><span style="color: #222222;">, and </span><span style="color: #222222; font-weight: bold;">deactivate the non-compliant APK(s)</span><span style="color: #222222;">.</span></li>
-</ol>
-<p><span style="color: #222222;">For your reference, if you continue to have technical issues related to deactivating the non-compliant APK, please contact the </span><a href="https://support.google.com/googleplay/android-developer/answer/7218994?hl=en" target="_blank" rel="noopener"><span style="color: #1a73e8;">Google Play developer support team</span></a><span style="color: #222222;">.</span></p>
-<h1>2. SDK Update</h1>
-<p>After completing all adjustments for the non-compliant APK (s);if you still haven't upgraded to the latest SDK version, please switch to the current versions.</p>
-<p>Insider's latest SDK versions are as follows:</p>
-<ol>
-<li>Native Android : 11.6.1 and 11.6.1-nh (Non Huawei )Changelogs: <a href="https://github.com/useinsider/java-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/java-sample/blob/master/Changelog.md</a></li>
-<li>React Native: 4.1.1 and 4.1.1-NH (Non Huawei )</li>
-</ol>
-<p>Changelogs :<a href="https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md</a></p>
-<ol>
-<li>Flutter :2.1.1 and 2.1.1-nh&nbsp; (Non Huawei )</li>
-</ol>
-<p>Changelogs : <a href="https://github.com/useinsider/dart-sample/blob/master/Changelog.md" target="_blank" rel="noopener">https://github.com/useinsider/dart-sample/blob/master/Changelog.md</a></p>
-<h1>3.Location Collection&nbsp;</h1>
-<p>According to Google&rsquo;s policy restrictions, you may only request permissions that are crucial to the core functionality of your application. You may not use permissions that give access to the user or device data for undisclosed, unimplemented, or disallowed features or purposes.</p>
-<p>If you&rsquo;re collecting location information you need to be sure that you follow these steps :&nbsp;</p>
-<ol>
-<li>Request location permissions : <a href="https://developer.android.com/training/location/permissions#background" target="_blank" rel="noopener">https://developer.android.com/training/location/permissions#background</a></li>
-<li>Location updates in Android 11 : <a href="https://developer.android.com/about/versions/11/privacy/location#background-location" target="_blank" rel="noopener">https://developer.android.com/about/versions/11/privacy/location#background-location</a></li>
-</ol>
-<p>If your application collects the location information to use the Geofence feature via the Insider SDK, you can exclude the following <span style="font-weight: bold;">permissions</span> in your app&rsquo;s <span style="font-weight: bold;">AndroidManifest.xml</span></p>
-<p><span style="font-style: italic;">&lt;uses-permission</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_FINE_LOCATION"</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">"/&gt;</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&lt;uses-permission</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_BACKGROUND_LOCATION"</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">" /&gt;</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&lt;uses-permission</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;android:name="android.permission.ACCESS_COARSE_LOCATION"</span></p>
-<p><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tools:node="</span><span style="color: #ff0000; font-style: italic;">remove</span><span style="font-style: italic;">" /&gt;</span></p>
-<p>&nbsp;In the scenario where you want to stop collecting a specific location collection (e.g background), you just need to remove the corresponding permission method only.</p>
-<p><span style="font-weight: bold; font-style: italic;">Please note that; if the application is compliant to collect location permissions, that is, if you meet the requirements Google requires to collect location; no need to remove any method/permissions of the Geofence feature.</span></p>
-<h1>4.Privacy Policy Review</h1>
-<p>From April 2020 google is on track to enforce user&rsquo;s right to give consent / reject any kind of information that can be tracked.</p>
-<p>If your application or your other SDKs uses/collects any information without <span style="font-weight: bold;">EXPLICITLY</span> declaring it, you should update your privacy policy immediately about these data collections.</p>
-<p>You can read in detail about the needs and privacy policies here.</p>
-<p>There will also be new policy changes starting from January 20 - 2021</p>
-<ol>
-<li><a href="https://support.google.com/googleplay/android-developer/answer/9992660" target="_blank" rel="noopener">https://support.google.com/googleplay/android-developer/answer/9992660</a></li>
-<li><a href="https://developer.android.com/about/versions/11/privacy" target="_blank" rel="noopener">https://developer.android.com/about/versions/11/privacy</a></li>
-<li><a href="https://developer.android.com/distribute/play-policies#NovemberPolicyUpdate" target="_blank" rel="noopener">https://developer.android.com/distribute/play-policies#NovemberPolicyUpdate</a></li>
-</ol>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <style type="text/css">
+        @import url('https://themes.googleusercontent.com/fonts/css?kit=fOEonugfEEW2k3BWBOC73CXHfZMcH88HuPcErL5npACHpuVWaP-GHFPZzt35558q');
+
+        .lst-kix_ht41j9qv00gd-1>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-1
+        }
+
+        .lst-kix_8sn033bxe3uh-3>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-3
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-0.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-0 0
+        }
+
+        .lst-kix_8addgespkjc3-7>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-7
+        }
+
+        .lst-kix_o2iswjrocu57-8>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-8
+        }
+
+        ol.lst-kix_4980z3yabmn9-2.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-2 0
+        }
+
+        .lst-kix_hs9gdp11qdtm-2>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-2
+        }
+
+        .lst-kix_ftyrchsnsi9c-6>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-6
+        }
+
+        ol.lst-kix_8addgespkjc3-8.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-8 0
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-6.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-6 0
+        }
+
+        ol.lst-kix_o2iswjrocu57-0.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-0 0
+        }
+
+        ol.lst-kix_ht41j9qv00gd-6.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-6 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-2.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-2 0
+        }
+
+        ol.lst-kix_o2iswjrocu57-5.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-5 0
+        }
+
+        ol.lst-kix_8sn033bxe3uh-3.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-3 0
+        }
+
+        ol.lst-kix_8addgespkjc3-2.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-2 0
+        }
+
+        ol.lst-kix_4980z3yabmn9-8.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-8 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-4>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-4
+        }
+
+        .lst-kix_8addgespkjc3-1>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-1, lower-latin) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-0>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-0
+        }
+
+        .lst-kix_8addgespkjc3-0>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-0, decimal) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-6>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-6
+        }
+
+        ol.lst-kix_o2iswjrocu57-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_o2iswjrocu57-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_8addgespkjc3-5>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-5
+        }
+
+        ol.lst-kix_o2iswjrocu57-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_hs9gdp11qdtm-0>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-0, decimal) ". "
+        }
+
+        .lst-kix_8addgespkjc3-3>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-3, decimal) ". "
+        }
+
+        ol.lst-kix_o2iswjrocu57-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_o2iswjrocu57-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_o2iswjrocu57-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_hs9gdp11qdtm-1>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-1, lower-latin) ". "
+        }
+
+        .lst-kix_8addgespkjc3-2>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-2, lower-roman) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-5>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-5
+        }
+
+        .lst-kix_hs9gdp11qdtm-2>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-2, lower-roman) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-4>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-4, lower-latin) ". "
+        }
+
+        .lst-kix_8addgespkjc3-7>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-7, lower-latin) ". "
+        }
+
+        ol.lst-kix_o2iswjrocu57-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_o2iswjrocu57-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_hs9gdp11qdtm-3>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-3, decimal) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-7>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-7, lower-latin) ". "
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-1.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-1 0
+        }
+
+        .lst-kix_8addgespkjc3-4>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-4, lower-latin) ". "
+        }
+
+        .lst-kix_8addgespkjc3-8>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-8, lower-roman) ". "
+        }
+
+        ol.lst-kix_o2iswjrocu57-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_hs9gdp11qdtm-6>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-6, decimal) ". "
+        }
+
+        .lst-kix_8addgespkjc3-5>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-5, lower-roman) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-3.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-3 0
+        }
+
+        ol.lst-kix_8sn033bxe3uh-4.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-4 0
+        }
+
+        .lst-kix_hs9gdp11qdtm-5>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-5, lower-roman) ". "
+        }
+
+        .lst-kix_8addgespkjc3-6>li:before {
+            content: ""counter(lst-ctn-kix_8addgespkjc3-6, decimal) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-6>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-6
+        }
+
+        .lst-kix_hs9gdp11qdtm-8>li:before {
+            content: ""counter(lst-ctn-kix_hs9gdp11qdtm-8, lower-roman) ". "
+        }
+
+        .lst-kix_ftyrchsnsi9c-8>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-8
+        }
+
+        ol.lst-kix_4980z3yabmn9-3.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-3 0
+        }
+
+        ol.lst-kix_o2iswjrocu57-4.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-4 0
+        }
+
+        .lst-kix_4980z3yabmn9-1>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-1
+        }
+
+        ol.lst-kix_8addgespkjc3-4.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-4 0
+        }
+
+        .lst-kix_ht41j9qv00gd-8>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-8, lower-roman) ". "
+        }
+
+        .lst-kix_ht41j9qv00gd-7>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-7
+        }
+
+        ol.lst-kix_8sn033bxe3uh-5.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-5 0
+        }
+
+        .lst-kix_ht41j9qv00gd-4>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-4, lower-latin) ". "
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-3.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-3 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_ht41j9qv00gd-2>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-2, lower-roman) ". "
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_8addgespkjc3-1>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-1
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_ftyrchsnsi9c-2>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-2
+        }
+
+        .lst-kix_ht41j9qv00gd-6>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-6, decimal) ". "
+        }
+
+        .lst-kix_4980z3yabmn9-6>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-6
+        }
+
+        ol.lst-kix_ht41j9qv00gd-5.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-5 0
+        }
+
+        .lst-kix_ht41j9qv00gd-5>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-5
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-0.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-0 0
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-4.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-4 0
+        }
+
+        .lst-kix_4980z3yabmn9-5>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-5
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-7.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-7 0
+        }
+
+        .lst-kix_4980z3yabmn9-0>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-0, decimal) ". "
+        }
+
+        .lst-kix_4980z3yabmn9-4>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-4, lower-latin) ". "
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-5.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-5 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-1.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-1 0
+        }
+
+        ol.lst-kix_o2iswjrocu57-6.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-6 0
+        }
+
+        .lst-kix_4980z3yabmn9-2>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-2, lower-roman) ". "
+        }
+
+        ol.lst-kix_4980z3yabmn9-7.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-7 0
+        }
+
+        ol.lst-kix_8addgespkjc3-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_4980z3yabmn9-6>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-6, decimal) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8addgespkjc3-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-7.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-7 0
+        }
+
+        ol.lst-kix_8addgespkjc3-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_o2iswjrocu57-5>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-5
+        }
+
+        .lst-kix_ftyrchsnsi9c-3>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-3
+        }
+
+        .lst-kix_ftyrchsnsi9c-8>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-8, lower-roman) ". "
+        }
+
+        ol.lst-kix_ht41j9qv00gd-8.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-8 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-6>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-6, decimal) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-6.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-6 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-4>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-4, lower-latin) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_4980z3yabmn9-8>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-8, lower-roman) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8addgespkjc3-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8addgespkjc3-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_o2iswjrocu57-4>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-4
+        }
+
+        ol.lst-kix_8addgespkjc3-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_ftyrchsnsi9c-0>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-0, decimal) ". "
+        }
+
+        .lst-kix_8addgespkjc3-6>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-6
+        }
+
+        ol.lst-kix_4980z3yabmn9-6.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-6 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-2>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-2, lower-roman) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-4>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-4
+        }
+
+        .lst-kix_8addgespkjc3-0>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-0
+        }
+
+        ol.lst-kix_o2iswjrocu57-7.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-7 0
+        }
+
+        ol.lst-kix_8addgespkjc3-7.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-7 0
+        }
+
+        .lst-kix_ht41j9qv00gd-0>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-0, decimal) ". "
+        }
+
+        .lst-kix_ht41j9qv00gd-0>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-0
+        }
+
+        ol.lst-kix_ht41j9qv00gd-7.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-7 0
+        }
+
+        .lst-kix_8sn033bxe3uh-4>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-4
+        }
+
+        ol.lst-kix_8sn033bxe3uh-8.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-8 0
+        }
+
+        .lst-kix_ht41j9qv00gd-6>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-6
+        }
+
+        .lst-kix_4980z3yabmn9-0>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-0
+        }
+
+        .lst-kix_8sn033bxe3uh-8>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-8, lower-roman) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-7>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-7, lower-latin) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-4>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-4, lower-latin) ". "
+        }
+
+        .lst-kix_hs9gdp11qdtm-3>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-3
+        }
+
+        .lst-kix_o2iswjrocu57-0>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-0, decimal) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-1>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-1, lower-latin) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-5>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-5, lower-roman) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-6>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-6, decimal) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-2>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-2, lower-roman) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-4>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-4, lower-latin) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-5>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-5, lower-roman) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-2>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-2
+        }
+
+        .lst-kix_o2iswjrocu57-3>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-3, decimal) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-7>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-7, lower-latin) ". "
+        }
+
+        ol.lst-kix_o2iswjrocu57-8.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-8 0
+        }
+
+        .lst-kix_8addgespkjc3-8>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-8
+        }
+
+        ol.lst-kix_ht41j9qv00gd-3.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-3 0
+        }
+
+        .lst-kix_o2iswjrocu57-7>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-7
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-3.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-3 0
+        }
+
+        .lst-kix_o2iswjrocu57-6>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-6, decimal) ". "
+        }
+
+        .lst-kix_4980z3yabmn9-2>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-2
+        }
+
+        .lst-kix_ht41j9qv00gd-2>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-2
+        }
+
+        ol.lst-kix_o2iswjrocu57-2.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-2 0
+        }
+
+        ol.lst-kix_8addgespkjc3-5.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-5 0
+        }
+
+        ol.lst-kix_8sn033bxe3uh-6.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-6 0
+        }
+
+        .lst-kix_8sn033bxe3uh-0>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-0, decimal) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-1>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-1, lower-latin) ". "
+        }
+
+        ol.lst-kix_4980z3yabmn9-5.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-5 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-7>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-7
+        }
+
+        .lst-kix_8sn033bxe3uh-3>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-3, decimal) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-2>li:before {
+            content: ""counter(lst-ctn-kix_8sn033bxe3uh-2, lower-roman) ". "
+        }
+
+        .lst-kix_8sn033bxe3uh-0>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-0
+        }
+
+        .lst-kix_ht41j9qv00gd-4>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-4
+        }
+
+        ol.lst-kix_ht41j9qv00gd-4.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-4 0
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-8.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-8 0
+        }
+
+        .lst-kix_8addgespkjc3-4>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-4
+        }
+
+        ol.lst-kix_o2iswjrocu57-3.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-3 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-5.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-5 0
+        }
+
+        .lst-kix_hs9gdp11qdtm-5>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-5
+        }
+
+        .lst-kix_8sn033bxe3uh-6>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-6
+        }
+
+        ol.lst-kix_4980z3yabmn9-4.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-4 0
+        }
+
+        ol.lst-kix_4980z3yabmn9-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_ftyrchsnsi9c-5>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-5
+        }
+
+        .lst-kix_o2iswjrocu57-3>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-3
+        }
+
+        .lst-kix_4980z3yabmn9-7>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-7
+        }
+
+        .lst-kix_o2iswjrocu57-8>li:before {
+            content: ""counter(lst-ctn-kix_o2iswjrocu57-8, lower-roman) ". "
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-4.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-4 0
+        }
+
+        .lst-kix_o2iswjrocu57-0>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-0
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_4980z3yabmn9-4>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-4
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ftyrchsnsi9c-2.start {
+            counter-reset: lst-ctn-kix_ftyrchsnsi9c-2 0
+        }
+
+        ol.lst-kix_4980z3yabmn9-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_ftyrchsnsi9c-1>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-1
+        }
+
+        .lst-kix_ht41j9qv00gd-5>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-5, lower-roman) ". "
+        }
+
+        .lst-kix_8addgespkjc3-2>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-2
+        }
+
+        .lst-kix_o2iswjrocu57-2>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-2
+        }
+
+        ol.lst-kix_8sn033bxe3uh-2.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-2 0
+        }
+
+        .lst-kix_ht41j9qv00gd-3>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-3, decimal) ". "
+        }
+
+        ol.lst-kix_8addgespkjc3-1.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-1 0
+        }
+
+        .lst-kix_hs9gdp11qdtm-8>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-8
+        }
+
+        .lst-kix_ht41j9qv00gd-7>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-7, lower-latin) ". "
+        }
+
+        .lst-kix_o2iswjrocu57-1>li {
+            counter-increment: lst-ctn-kix_o2iswjrocu57-1
+        }
+
+        ol.lst-kix_ht41j9qv00gd-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_4980z3yabmn9-1.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-1 0
+        }
+
+        ol.lst-kix_8sn033bxe3uh-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_ht41j9qv00gd-8>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-8
+        }
+
+        ol.lst-kix_8sn033bxe3uh-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_4980z3yabmn9-8>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-8
+        }
+
+        .lst-kix_8sn033bxe3uh-8>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-8
+        }
+
+        ol.lst-kix_8sn033bxe3uh-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_8sn033bxe3uh-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_4980z3yabmn9-1>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-1, lower-latin) ". "
+        }
+
+        ol.lst-kix_8sn033bxe3uh-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_ht41j9qv00gd-2.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-2 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-6.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-6 0
+        }
+
+        ol.lst-kix_4980z3yabmn9-0.start {
+            counter-reset: lst-ctn-kix_4980z3yabmn9-0 0
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-8.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-8 0
+        }
+
+        .lst-kix_4980z3yabmn9-3>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-3, decimal) ". "
+        }
+
+        ol.lst-kix_8sn033bxe3uh-0.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-0 0
+        }
+
+        .lst-kix_4980z3yabmn9-5>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-5, lower-roman) ". "
+        }
+
+        .lst-kix_4980z3yabmn9-3>li {
+            counter-increment: lst-ctn-kix_4980z3yabmn9-3
+        }
+
+        .lst-kix_ftyrchsnsi9c-7>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-7, lower-latin) ". "
+        }
+
+        ol.lst-kix_ht41j9qv00gd-1.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-1 0
+        }
+
+        .lst-kix_4980z3yabmn9-7>li:before {
+            content: ""counter(lst-ctn-kix_4980z3yabmn9-7, lower-latin) ". "
+        }
+
+        .lst-kix_ftyrchsnsi9c-3>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-3, decimal) ". "
+        }
+
+        .lst-kix_ftyrchsnsi9c-5>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-5, lower-roman) ". "
+        }
+
+        .lst-kix_ftyrchsnsi9c-1>li:before {
+            content: ""counter(lst-ctn-kix_ftyrchsnsi9c-1, lower-latin) ". "
+        }
+
+        .lst-kix_8addgespkjc3-3>li {
+            counter-increment: lst-ctn-kix_8addgespkjc3-3
+        }
+
+        ol.lst-kix_hs9gdp11qdtm-7.start {
+            counter-reset: lst-ctn-kix_hs9gdp11qdtm-7 0
+        }
+
+        .lst-kix_hs9gdp11qdtm-1>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-1
+        }
+
+        .lst-kix_8sn033bxe3uh-7>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-7
+        }
+
+        ol.lst-kix_8addgespkjc3-0.start {
+            counter-reset: lst-ctn-kix_8addgespkjc3-0 0
+        }
+
+        ol.lst-kix_8sn033bxe3uh-1.start {
+            counter-reset: lst-ctn-kix_8sn033bxe3uh-1 0
+        }
+
+        ol.lst-kix_ht41j9qv00gd-0.start {
+            counter-reset: lst-ctn-kix_ht41j9qv00gd-0 0
+        }
+
+        .lst-kix_ftyrchsnsi9c-0>li {
+            counter-increment: lst-ctn-kix_ftyrchsnsi9c-0
+        }
+
+        .lst-kix_ht41j9qv00gd-3>li {
+            counter-increment: lst-ctn-kix_ht41j9qv00gd-3
+        }
+
+        .lst-kix_ht41j9qv00gd-1>li:before {
+            content: ""counter(lst-ctn-kix_ht41j9qv00gd-1, lower-latin) ". "
+        }
+
+        ol.lst-kix_o2iswjrocu57-1.start {
+            counter-reset: lst-ctn-kix_o2iswjrocu57-1 0
+        }
+
+        .lst-kix_8sn033bxe3uh-1>li {
+            counter-increment: lst-ctn-kix_8sn033bxe3uh-1
+        }
+
+        .lst-kix_hs9gdp11qdtm-7>li {
+            counter-increment: lst-ctn-kix_hs9gdp11qdtm-7
+        }
+
+        ol {
+            margin: 0;
+            padding: 0
+        }
+
+        table td,
+        table th {
+            padding: 0
+        }
+
+        .c11 {
+            background-color: #ffecb3;
+            -webkit-text-decoration-skip: none;
+            color: #1a73e8;
+            font-weight: 400;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+            font-size: 10pt;
+            font-family: "Poppins"
+        }
+
+        .c1 {
+            margin-left: 36pt;
+            padding-top: 0pt;
+            padding-left: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c3 {
+            background-color: #ffffff;
+            color: #222222;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 10pt;
+            font-family: "Poppins";
+            font-style: normal
+        }
+
+        .c22 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 19pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c17 {
+            padding-top: 10pt;
+            padding-bottom: 10pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            margin-right: 30pt
+        }
+
+        .c5 {
+            -webkit-text-decoration-skip: none;
+            color: #1155cc;
+            font-weight: 400;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+            font-size: 10pt;
+            font-family: "Poppins"
+        }
+
+        .c23 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 10pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c13 {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 9pt;
+            font-family: "Poppins";
+            font-style: italic
+        }
+
+        .c6 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 10pt;
+            font-family: "Poppins";
+            font-style: normal
+        }
+
+        .c8 {
+            margin-left: 72pt;
+            padding-top: 3pt;
+            padding-bottom: 3pt;
+            line-height: 1.50001;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c10 {
+            padding-top: 20pt;
+            padding-bottom: 6pt;
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c0 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        .c14 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 9pt;
+            font-family: "Consolas";
+            font-style: italic
+        }
+
+        .c9 {
+            color: #0000ff;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 20pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        .c2 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c12 {
+            background-color: #ffffff;
+            font-size: 10pt;
+            font-family: "Poppins";
+            color: #1a73e8;
+            font-weight: 400
+        }
+
+        .c18 {
+            background-color: #ffffff;
+            font-size: 10pt;
+            font-family: "Poppins";
+            color: #222222;
+            font-weight: 700
+        }
+
+        .c27 {
+            color: #000000;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-style: normal
+        }
+
+        .c15 {
+            font-size: 9pt;
+            font-family: "Consolas";
+            font-style: italic;
+            font-weight: 400
+        }
+
+        .c28 {
+            font-weight: 700;
+            font-size: 10pt;
+            font-family: "Poppins"
+        }
+
+        .c16 {
+            font-size: 10pt;
+            font-family: "Poppins";
+            font-weight: 400
+        }
+
+        .c20 {
+            font-size: 19pt;
+            font-family: "Poppins";
+            font-weight: 400
+        }
+
+        .c30 {
+            font-weight: 400;
+            font-size: 20pt;
+            font-family: "Arial"
+        }
+
+        .c4 {
+            color: inherit;
+            text-decoration: inherit
+        }
+
+        .c31 {
+            max-width: 468pt;
+            padding: 72pt 72pt 72pt 72pt
+        }
+
+        .c19 {
+            margin-left: 36pt;
+            padding-left: 0pt
+        }
+
+        .c7 {
+            padding: 0;
+            margin: 0
+        }
+
+        .c21 {
+            color: #ff0000
+        }
+
+        .c29 {
+            height: 11pt
+        }
+
+        .c26 {
+            color: #222222
+        }
+
+        .c24 {
+            background-color: #ffffff
+        }
+
+        .c25 {
+            margin-left: 36pt
+        }
+
+        .title {
+            padding-top: 0pt;
+            color: #000000;
+            font-size: 26pt;
+            padding-bottom: 3pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .subtitle {
+            padding-top: 0pt;
+            color: #666666;
+            font-size: 15pt;
+            padding-bottom: 16pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        li {
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        h1 {
+            padding-top: 20pt;
+            color: #000000;
+            font-size: 20pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h2 {
+            padding-top: 18pt;
+            color: #000000;
+            font-size: 16pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h3 {
+            padding-top: 16pt;
+            color: #434343;
+            font-size: 14pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h4 {
+            padding-top: 14pt;
+            color: #666666;
+            font-size: 12pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h5 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h6 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
+</head>
+
+<body class="c24 c31">
+    <h1 class="c10" id="h.rkk626ptwtc"><span class="c16 c26 c24">Due to the recent changes in Google Play Policies made
+            on 16/12/2020, we have observed a change of behavior in the review and approval initiatives of Google Play.
+            You can see the policy updates </span><span class="c5 c24"><a class="c4"
+                href="https://www.google.com/url?q=https://support.google.com/googleplay/android-developer/answer/9934569?hl%3Den%26ref_topic%3D9877065&amp;sa=D&amp;ust=1609944611087000&amp;usg=AOvVaw3_ztaltTz-_2YAWFusUyTg">here</a></span><span
+            class="c16 c26 c24">.</span></h1>
+    <h1 class="c10" id="h.jjdlr03wz93m"><span class="c16 c26 c24">Although there were no policy changes made covering
+            this scope</span><span class="c3">, policy reviewers started to send warnings about collection of Installed
+            Applications information starting from 17/12/2020.</span></h1>
+    <h1 class="c10" id="h.gmuju37ydy29"><span class="c3">We have immediately released a new Android SDK version (11.6.1)
+            which does not include any methods related to Installed Applications. We have also updated React Native and
+            Flutter SDKs. If you are using an older version of the SDK, it&rsquo;s recommended to update the SDK and
+            ensure you have followed the steps explained below.</span></h1>
+    <h1 class="c10" id="h.vvkaceu8fh9r"><span class="c16 c26 c24">This guide is prepared to help you update all
+            necessary APKs listed in your Play Store account and get an approval.</span></h1>
+    <h1 class="c10" id="h.gbz240xzy00x"><span class="c20">1.Updating/Removing Old Tracks from the All Stages</span><span
+            class="c20 c27">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h1>
+    <p class="c2"><span class="c16">Before starting the release process, please make sure to remove (if possible)
+            &nbsp;the non-compliant APK(s) or old versions of your apps on all stages including Alpha, Beta and
+            production. During the review process, Google may reject or remove your application if you have any
+            non-compliant APK(s) in your internal tracks. </span></p>
+    <p class="c17"><span class="c3">For support on deactivating the non-compliant APK, please try the following steps
+            below:</span></p>
+    <ol class="c7 lst-kix_4980z3yabmn9-0 start" start="1">
+        <li class="c17 c19"><span class="c16 c26 c24">To deactivate a non-compliant APK, </span><span class="c18">create
+                a new release and upload a compliant APK to the same track</span><span class="c3">.</span></li>
+        <li class="c17 c19"><span class="c16 c26 c24">Be sure to </span><span class="c11"><a class="c4"
+                    href="https://www.google.com/url?q=https://support.google.com/googleplay/android-developer/answer/113476&amp;sa=D&amp;ust=1609944611090000&amp;usg=AOvVaw3tf947BTLt4YFoE5hgWIeI">increment
+                    the APK version number</a></span><span class="c16 c26 c24">&nbsp;and set the release to 100%
+                rollout, </span><span class="c18">in order to successfully override and deactivate the non-compliant
+                APK(s)</span><span class="c3">.</span></li>
+    </ol>
+    <p class="c17"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 361.33px;"><img
+                alt="" src="images/image1.png"
+                style="width: 624.00px; height: 361.33px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <p class="c17"><span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 374.67px;"><img
+                alt="" src="images/image2.png"
+                style="width: 624.00px; height: 374.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                title=""></span></p>
+    <ol class="c7 lst-kix_4980z3yabmn9-0" start="3">
+        <li class="c17 c19"><span class="c16 c24 c26">Sign in to your </span><span class="c12"><a class="c4"
+                    href="https://www.google.com/url?q=https://play.google.com/apps/publish/&amp;sa=D&amp;ust=1609944611091000&amp;usg=AOvVaw01C31iR51_b6_MB7rUhEHG">Play
+                    Console</a></span><span class="c16 c26 c24">, </span><span class="c11"><a class="c4"
+                    href="https://www.google.com/url?q=https://support.google.com/googleplay/android-developer/answer/113476&amp;sa=D&amp;ust=1609944611091000&amp;usg=AOvVaw2kgkbJ4RGIMz2-F9OliOg_">upload
+                    the modified policy compliant APK</a></span><span class="c16 c26 c24">&nbsp;</span><span
+                class="c18">across all tracks</span><span class="c16 c26 c24">, and </span><span class="c18">deactivate
+                the non-compliant APK(s)</span><span class="c3">.</span></li>
+    </ol>
+    <p class="c17"><span class="c16 c26 c24">For your reference, if you continue to have technical issues related to
+            deactivating the non-compliant APK, please contact the </span><span class="c12"><a class="c4"
+                href="https://www.google.com/url?q=https://support.google.com/googleplay/android-developer/answer/7218994?hl%3Den&amp;sa=D&amp;ust=1609944611092000&amp;usg=AOvVaw3tXXSrCtxRjkRpCf5HLP1p">Google
+                Play developer support team</a></span><span class="c3">.</span></p>
+    <p class="c17 c29"><span class="c3"></span></p>
+    <h1 class="c10" id="h.f7jerup5rax1"><span class="c27 c20">2. SDK Update</span></h1>
+    <p class="c2"><span class="c6">After completing all adjustments for the non-compliant APK (s);if you still
+            haven&#39;t upgraded to the latest SDK version, please switch to the current versions.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c6">Insider&#39;s latest SDK versions are as follows:</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <ol class="c7 lst-kix_ftyrchsnsi9c-0 start" start="1">
+        <li class="c1"><span class="c16">Native Android : 11.6.1 and 11.6.1-nh (Non Huawei )<br>Changelogs: </span><span
+                class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://github.com/useinsider/java-sample/blob/master/Changelog.md&amp;sa=D&amp;ust=1609944611093000&amp;usg=AOvVaw2_0Z0hPLLiZd1TOuEiwxwA">https://github.com/useinsider/java-sample/blob/master/Changelog.md</a></span><span
+                class="c6">&nbsp;</span></li>
+        <li class="c1"><span class="c6">React Native: 4.1.1 and 4.1.1-NH (Non Huawei )</span></li>
+    </ol>
+    <p class="c2 c25"><span class="c16">Changelogs :</span><span class="c5"><a class="c4"
+                href="https://www.google.com/url?q=https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md&amp;sa=D&amp;ust=1609944611093000&amp;usg=AOvVaw1rwk8uxDngAHyZH9QGA1Oj">https://github.com/useinsider/reactjs-sample/blob/master/Changelog.md</a></span><span
+            class="c6">&nbsp;</span></p>
+    <ol class="c7 lst-kix_ftyrchsnsi9c-0" start="3">
+        <li class="c1"><span class="c6">Flutter :2.1.1 and 2.1.1-nh &nbsp;(Non Huawei )</span></li>
+    </ol>
+    <p class="c2 c25"><span class="c16">Changelogs : </span><span class="c5"><a class="c4"
+                href="https://www.google.com/url?q=https://github.com/useinsider/dart-sample/blob/master/Changelog.md&amp;sa=D&amp;ust=1609944611094000&amp;usg=AOvVaw1qQS-YC7BM39wq_uKNVLvD">https://github.com/useinsider/dart-sample/blob/master/Changelog.md</a></span><span
+            class="c6">&nbsp;</span></p>
+    <h1 class="c10" id="h.1ubodz98xytw"><span class="c20">3.Location Collection </span></h1>
+    <p class="c2"><span class="c6">According to Google&rsquo;s policy restrictions, you may only request permissions
+            that are crucial to the core functionality of your application. You may not use permissions that give access
+            to the user or device data for undisclosed, unimplemented, or disallowed features or purposes.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c6">If you&rsquo;re collecting location information you need to be sure that you follow
+            these steps : </span></p>
+    <ol class="c7 lst-kix_o2iswjrocu57-0 start" start="1">
+        <li class="c1"><span class="c16">Request location permissions : </span><span class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://developer.android.com/training/location/permissions%23background&amp;sa=D&amp;ust=1609944611096000&amp;usg=AOvVaw23BJBWdJJGXQRQK1ua2CPV">https://developer.android.com/training/location/permissions#background</a></span><span
+                class="c6">&nbsp;</span></li>
+        <li class="c1"><span class="c16">Location updates in Android 11 : </span><span class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://developer.android.com/about/versions/11/privacy/location%23background-location&amp;sa=D&amp;ust=1609944611096000&amp;usg=AOvVaw2JfvfVsMZwqeWOvoD_dDPW">https://developer.android.com/about/versions/11/privacy/location#background-location</a></span><span
+                class="c6">&nbsp;</span></li>
+    </ol>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c16">If your application collects the location information to use the Geofence
+            fe</span><span class="c16">ature via the Insider SDK, you can exclude the following </span><span
+            class="c28">permissions</span><span class="c16">&nbsp;in your app&rsquo;s </span><span
+            class="c27 c28">AndroidManifest.xml</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c8"><span class="c14">&lt;uses-permission</span></p>
+    <p class="c8"><span class="c14">&nbsp; &nbsp; &nbsp;
+            &nbsp;android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot;</span></p>
+    <p class="c8"><span class="c15">&nbsp; &nbsp; &nbsp; &nbsp;tools:node=&quot;</span><span
+            class="c15 c21">remove</span><span class="c14">&quot;/&gt;</span></p>
+    <p class="c8"><span class="c14">&nbsp; &nbsp;&lt;uses-permission</span></p>
+    <p class="c8"><span class="c14">&nbsp; &nbsp; &nbsp;
+            &nbsp;android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot;</span></p>
+    <p class="c8"><span class="c15">&nbsp; &nbsp; &nbsp; &nbsp;tools:node=&quot;</span><span
+            class="c15 c21">remove</span><span class="c14">&quot; /&gt;</span></p>
+    <p class="c8"><span class="c14">&nbsp; &nbsp;&lt;uses-permission</span></p>
+    <p class="c8"><span class="c14">&nbsp; &nbsp; &nbsp;
+            &nbsp;android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;</span></p>
+    <p class="c8"><span class="c15">&nbsp; &nbsp; &nbsp; &nbsp;tools:node=&quot;</span><span
+            class="c15 c21">remove</span><span class="c14">&quot; /&gt;</span></p>
+    <p class="c2"><span class="c6">&nbsp;In the scenario where you want to stop collecting a specific location
+            collection (e.g background), you just need to remove the corresponding permission method only.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c13">Please note that; if the application is compliant to collect location permissions,
+            that is, if you meet the requirements Google requires to collect location; no need to remove any
+            method/permissions of the Geofence feature.</span></p>
+    <p class="c0"><span class="c13"></span></p>
+    <p class="c0"><span class="c13"></span></p>
+    <h1 class="c10" id="h.sez5t8embmfc"><span class="c20">4.Privacy Policy Review</span></h1>
+    <p class="c0"><span class="c23"></span></p>
+    <p class="c2"><span class="c6">From April 2020 google is on track to enforce user&rsquo;s right to give consent /
+            reject any kind of information that can be tracked.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c16">If your application or your other SDKs uses/collects any information without
+        </span><span class="c28">EXPLICITLY</span><span class="c6">&nbsp;declaring it, you should update your privacy
+            policy immediately about these data collections.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c16">You can read in detail about the needs and privacy policies here</span><span
+            class="c6">.</span></p>
+    <p class="c0"><span class="c6"></span></p>
+    <p class="c2"><span class="c6">There will also be new policy changes starting from January 20 - 2021</span></p>
+    <ol class="c7 lst-kix_8addgespkjc3-0 start" start="1">
+        <li class="c1"><span class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://support.google.com/googleplay/android-developer/answer/9992660&amp;sa=D&amp;ust=1609944611101000&amp;usg=AOvVaw1zYFpSq-Hznc-XtdqomUDf">https://support.google.com/googleplay/android-developer/answer/9992660</a></span>
+        </li>
+        <li class="c1"><span class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://developer.android.com/about/versions/11/privacy&amp;sa=D&amp;ust=1609944611102000&amp;usg=AOvVaw3FOcIdSVV7cZa5bguC8Avy">https://developer.android.com/about/versions/11/privacy</a></span><span
+                class="c6">&nbsp;</span></li>
+        <li class="c1"><span class="c5"><a class="c4"
+                    href="https://www.google.com/url?q=https://developer.android.com/distribute/play-policies%23NovemberPolicyUpdate&amp;sa=D&amp;ust=1609944611102000&amp;usg=AOvVaw3zsgXLYQxcfXb1qyW0bV44">https://developer.android.com/distribute/play-policies#NovemberPolicyUpdate</a></span>
+        </li>
+    </ol>
+    <p class="c0"><span class="c23"></span></p>
+</body>
+
+</html>
